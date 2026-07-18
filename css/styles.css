@@ -1,0 +1,386 @@
+/* ==========================================================================
+   Sonaya Beauty Studio — Design Tokens & Custom Styles
+   Palette: Middle Peach premium editorial
+   Display: Fraunces | Body: Manrope | Utility/Eyebrow: Manrope (tracked caps)
+   ========================================================================== */
+
+:root{
+  /* --- Core palette --- */
+  --peach:        #F0B989;   /* middle peach — base background */
+  --peach-light:  #FCE7D2;   /* lifted peach — card surfaces */
+  --peach-pale:   #FFF7EE;   /* near-white cream — light surfaces */
+  --peach-deep:   #E2914F;   /* saturated peach-amber — accents */
+  --espresso:     #2B1810;   /* deep espresso brown — ink / dark sections */
+  --espresso-2:   #3D2417;   /* lifted espresso — dark surfaces */
+  --espresso-soft:#5C3C2A;   /* softened brown — secondary text on light */
+  --gold:         #C89355;   /* metallic gold — dividers, icon accents */
+  --gold-light:   #E8C48C;
+  --wine:         #7A2E2C;   /* deep wine — rare high-contrast accent */
+
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body:    'Manrope', -apple-system, sans-serif;
+
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*{ box-sizing: border-box; }
+
+html{
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body{
+  background-color: var(--peach);
+  color: var(--espresso);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display{ font-family: var(--font-display); }
+.font-body{ font-family: var(--font-body); }
+
+/* subtle grain overlay for premium print-like texture */
+.grain-overlay{
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* --- Eyebrow labels --- */
+.eyebrow{
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.eyebrow::before{
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: var(--gold);
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* --- Navbar --- */
+#site-nav{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(240, 185, 137, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(43,24,16,0.08);
+  transition: background 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
+}
+#site-nav.scrolled{
+  background: rgba(252, 231, 210, 0.92);
+  box-shadow: 0 8px 30px -12px rgba(43,24,16,0.25);
+}
+
+.nav-link{
+  position: relative;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--espresso);
+  opacity: 0.82;
+  transition: opacity 0.25s ease;
+}
+.nav-link::after{
+  content:'';
+  position:absolute;
+  left:0; bottom:-4px;
+  width:0; height:1.5px;
+  background: var(--gold);
+  transition: width 0.3s var(--ease-premium);
+}
+.nav-link:hover{ opacity: 1; }
+.nav-link:hover::after{ width: 100%; }
+
+.btn-gold{
+  background: var(--espresso);
+  color: var(--peach-light);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform 0.35s var(--ease-premium), box-shadow 0.35s var(--ease-premium), background 0.35s ease;
+  box-shadow: 0 10px 24px -10px rgba(43,24,16,0.5);
+}
+.btn-gold:hover{
+  background: var(--wine);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px -10px rgba(43,24,16,0.55);
+}
+
+.btn-outline{
+  border: 1.5px solid var(--espresso);
+  color: var(--espresso);
+  font-weight: 700;
+  transition: all 0.3s var(--ease-premium);
+}
+.btn-outline:hover{
+  background: var(--espresso);
+  color: var(--peach-light);
+}
+
+/* --- Hero --- */
+.hero-frame{
+  position: relative;
+}
+.hero-frame::before{
+  content:'';
+  position:absolute;
+  inset: -14px;
+  border: 1.5px solid var(--gold);
+  border-radius: 4px;
+  pointer-events: none;
+}
+.hero-blob{
+  position:absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+@keyframes float-y{
+  0%, 100%{ transform: translateY(0); }
+  50%{ transform: translateY(-14px); }
+}
+.float{ animation: float-y 6s ease-in-out infinite; }
+.float-slow{ animation: float-y 9s ease-in-out infinite; }
+
+@keyframes fade-up{
+  from{ opacity: 0; transform: translateY(26px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+.reveal{
+  opacity: 0;
+  animation: fade-up 0.9s var(--ease-premium) forwards;
+}
+
+/* Scroll reveal (JS toggled) */
+.observe{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-premium), transform 0.8s var(--ease-premium);
+}
+.observe.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+.observe-stagger.is-visible > *{
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+/* --- Marquee ticker --- */
+.ticker-track{
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 32s linear infinite;
+}
+@keyframes ticker-scroll{
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
+}
+.ticker-wrap:hover .ticker-track{ animation-play-state: paused; }
+
+/* --- 8-image HD carousel --- */
+.carousel-viewport{
+  overflow: hidden;
+  position: relative;
+}
+.carousel-track{
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  animation: carousel-scroll 42s linear infinite;
+}
+.carousel-track:hover{ animation-play-state: paused; }
+@keyframes carousel-scroll{
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
+}
+.carousel-card{
+  position: relative;
+  flex: 0 0 auto;
+  width: 300px;
+  height: 400px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -18px rgba(43,24,16,0.45);
+}
+@media (min-width: 768px){
+  .carousel-card{ width: 340px; height: 440px; }
+}
+.carousel-card img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-premium);
+}
+.carousel-card:hover img{ transform: scale(1.06); }
+.carousel-card .cap{
+  position:absolute; left:0; right:0; bottom:0;
+  padding: 1.1rem 1.2rem;
+  background: linear-gradient(to top, rgba(20,10,6,0.82), transparent);
+  color: #fff;
+}
+
+/* --- Service cards --- */
+.service-card{
+  background: var(--peach-pale);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
+  box-shadow: 0 10px 26px -16px rgba(43,24,16,0.35);
+}
+.service-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 26px 44px -18px rgba(43,24,16,0.4);
+}
+.service-card .img-wrap{
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+.service-card .img-wrap img{
+  width:100%; height:100%; object-fit: cover;
+  transition: transform 0.8s var(--ease-premium);
+}
+.service-card:hover .img-wrap img{ transform: scale(1.08); }
+
+.chip{
+  display:inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--wine);
+  background: rgba(122,46,44,0.08);
+  border: 1px solid rgba(122,46,44,0.25);
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+/* --- Process numbers --- */
+.process-num{
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.4px var(--gold);
+}
+
+/* --- Testimonial cards --- */
+.testimonial-card{
+  background: var(--peach-pale);
+  border-left: 3px solid var(--gold);
+}
+
+/* --- Live Studio Pulse notification --- */
+#pulse-toast{
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 90;
+  max-width: 320px;
+  background: var(--peach-pale);
+  border: 1px solid rgba(43,24,16,0.08);
+  border-radius: 10px;
+  box-shadow: 0 20px 40px -14px rgba(43,24,16,0.4);
+  transform: translateY(140%);
+  opacity: 0;
+  transition: transform 0.55s var(--ease-premium), opacity 0.55s var(--ease-premium);
+}
+#pulse-toast.show{
+  transform: translateY(0);
+  opacity: 1;
+}
+.pulse-dot{
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #3FA65C;
+  box-shadow: 0 0 0 rgba(63,166,92,0.6);
+  animation: pulse-ring 1.8s infinite;
+}
+@keyframes pulse-ring{
+  0%{ box-shadow: 0 0 0 0 rgba(63,166,92,0.55); }
+  70%{ box-shadow: 0 0 0 8px rgba(63,166,92,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(63,166,92,0); }
+}
+
+/* --- WhatsApp floating button --- */
+#wa-float{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: var(--espresso);
+  display: flex; align-items:center; justify-content:center;
+  box-shadow: 0 14px 30px -8px rgba(43,24,16,0.55);
+  transition: transform 0.35s var(--ease-premium);
+}
+#wa-float:hover{ transform: scale(1.08) translateY(-2px); }
+
+/* --- Social icons --- */
+.social-icon{
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(240,185,137,0.35);
+  display:flex; align-items:center; justify-content:center;
+  color: var(--peach-light);
+  transition: all 0.3s var(--ease-premium);
+}
+.social-icon:hover{
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--espresso);
+  transform: translateY(-3px);
+}
+
+/* --- Mobile nav --- */
+#mobile-menu{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s var(--ease-premium);
+}
+#mobile-menu.open{ max-height: 480px; }
+
+/* --- Stat count-up --- */
+.stat-num{
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section divider flourish */
+.flourish{
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+::selection{
+  background: var(--gold);
+  color: var(--espresso);
+}
+
+/* Scrollbar (webkit) light touch */
+::-webkit-scrollbar{ width: 10px; }
+::-webkit-scrollbar-track{ background: var(--peach-light); }
+::-webkit-scrollbar-thumb{ background: var(--gold); border-radius: 10px; }
